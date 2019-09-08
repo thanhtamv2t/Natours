@@ -4,7 +4,6 @@ const APIFeature = require('../utils/apiFeature');
 
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
-    console.log(req.params);
     //To allow nested GET (hack a round)
     let filter = {};
 
@@ -16,7 +15,7 @@ exports.getAll = Model =>
       .limitFields()
       .pagination();
 
-    const doc = await feature.query.explain();
+    const doc = await feature.query;
 
     res.status(200).json({
       status: 'success',
@@ -46,7 +45,6 @@ exports.getOne = (Model, popOpt = null) =>
 
 exports.createOne = Model =>
   catchAsync(async (req, res, next) => {
-    console.log(req.body);
     const doc = await Model.create(req.body);
 
     res.status(201).json({

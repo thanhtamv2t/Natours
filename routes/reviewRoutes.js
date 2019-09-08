@@ -18,6 +18,6 @@ router
 router
   .route('/:id')
   .patch(reviewController.updateReview)
-  .delete(protect, restrictTo('admin'), reviewController.deleteReview);
+  .delete(protect, reviewController.deleteReview);
 
 module.exports = router;

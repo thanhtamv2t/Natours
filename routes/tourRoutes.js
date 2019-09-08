@@ -13,18 +13,29 @@ const reviewRouter = require('./reviewRoutes');
 router.route('/stats').get(tourController.getTourStats);
 
 router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(tourController.getToursWithin);
+
+router
   .route('/')
   .get(tourController.getAllTours)
-  // .post(tourController.checkBody, tourController.createATours);
-  .post(tourController.createATours);
+  .post(
+    protect,
+    restrictTo('admin', 'lead-guide'),
+    tourController.createATours
+  );
 
 router
   .route('/:id')
   .get(tourController.getATours)
-  .patch(tourController.updateATours)
+  .patch(
+    protect,
+    restrictTo('admin', 'lead-guide'),
+    tourController.updateATours
+  )
   .delete(
     protect,
-    restrictTo('admin', 'tour-lead'),
+    restrictTo('admin', 'lead-guide'),
     tourController.deleteATours
   );
 
